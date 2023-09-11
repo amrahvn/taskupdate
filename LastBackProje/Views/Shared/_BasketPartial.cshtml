@@ -1,0 +1,60 @@
+﻿
+@model IEnumerable<BasketVm>
+
+
+<div class="cart-btn">
+    <a asp-controller="Basket" asp-action="CardBasket" >
+        <i class="icon ion-bag"></i>
+        <span class="text">Cart :</span>
+        <span class="total">$@Model.Sum(m=>m.Count * (m.Price + m.ExTag))</span>
+        <span class="count">@Model.Count()</span>
+    </a>
+</div>
+<div class="mini-cart">
+
+    <ul class="cart-items">
+        @foreach (BasketVm basketVm in Model)
+        {
+            <li>
+                <div class="single-cart-item d-flex" data-product-id="@basketVm.Id">
+                    <div class="cart-item-thumb">
+                        <a href="single-product.html"><img src="~/assets/images/product/@basketVm.Image" alt="product"></a>
+                        <span class="product-quantity">(@basketVm.Count) x</span>
+                    </div>
+                    <div class="cart-item-content media-body">
+                        <h5 class="product-name"><a href="single-product.html">@basketVm.Title</a></h5>
+                        <span class="product-price">€@basketVm.Price</span>
+                        
+                        <a class="product-close" asp-controller="Basket" asp-action="DeleteBasket" asp-route-id="@basketVm.Id">
+                            <i class="fal fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+            </li>
+        }
+      
+    </ul>
+
+    
+
+    <div class="price_content">
+        <div class="cart-subtotals">
+            <div class="products price_inline">
+                <span class="label">Subtotal</span>
+                <span class="value">€@Model.Sum(m=>m.Count * m.Price)</span>
+            </div>
+        
+            <div class="tax price_inline">
+                <span class="label">Taxes</span>
+                <span class="value">€@Model.Sum(m=>m.Count * m.ExTag)</span>
+            </div>
+        </div>
+        <div class="cart-total price_inline">
+            <span class="label">Total</span>
+            <span class="value">€@Model.Sum(m=>m.Count * (m.Price + m.ExTag))</span>
+        </div>
+    </div> <!-- price content -->
+    <div class="checkout text-center">
+        <a href="checkout.html" class="main-btn">Checkout</a>
+    </div>
+</div> <!-- mini cart -->

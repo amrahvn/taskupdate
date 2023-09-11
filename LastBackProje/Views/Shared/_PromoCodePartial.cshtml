@@ -1,0 +1,3 @@
+﻿@model Dictionary<string,string>
+
+<p>@Html.Raw(Model.FirstOrDefault(s=>s.Key=="Promocode").Value)</p>
